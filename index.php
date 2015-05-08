@@ -10,7 +10,7 @@
 
 	if (isset($_GET['code'])){
 		$code = ($_GET['code']);
-		$url = 'http://api.instagram.com/oauth/access_token';
+		$url = 'https://api.instagram.com/oauth/access_token';
 		$access_token_settings = array('client_id' => clientID,
 			'client_secret' => clientSecret,
 			'grant_type' => 'authorization_code',
