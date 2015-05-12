@@ -8,6 +8,76 @@
 	define('redirectURI','http://localhost/appAPI/index.php');
 	define('ImageDirectory','pics/');
 
+	// function connectToInstagram($url){
+	// 	$ch = curl_init();
+
+	// 	curl_setopt_array($ch, array(
+	// 		CURLOPT_URL => $url,
+	// 		CURLOPT_RETURNTRANSFER => true,
+	// 		CURLOPT_SSL_VERIFYPEER => false,
+	// 		CURLOPT_SSL_VERIFYHOST => 2,
+	// 	));
+	// 	$result = curl_exec($ch);
+	// 	curl_close($ch);
+	// 	return $result;
+	// }
+function connectToInstagram($url){
+	$ch = curl_init();
+	curl_setopt_array($ch, array(
+		CURLOPT_URL => $url, 
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_SSL_VERIFYPEER => false,
+		CURLOPT_SSL_VERIFYHOST => 2,  
+		));
+	$result = curl_exec($ch);
+	curl_close($ch);
+	return $result;
+}
+	// function getUserID($userName){
+	// 	$url = 'https://api.instagram.com/vl/users/search?q='.$userName.'&client_id='.clientID;
+	// 	$instagramInfo = connectToInstagram($url);
+	// 	$results = json_decode($instagramInfo, true);
+
+	// 	return  $results['data'][0]['id'];
+	// }
+
+	// function printImages($userID){
+	// 	$url = 'https://api.instagram.com/vl/users/'.$userID.'/media/recent?client_id='.clientID.'&count=5';
+	// 	$instagramInfo = connectToInstagram($url);
+	// 	$results = json_decode($instagramInfo, true);
+
+	// 	foreach ($results['data'] as $items) {
+	// 		$image_url = $items['images']['low_resolution']['url'];
+	// 		echo '<img src=" '.$image_url.' "/><br/>';
+	// 	}
+	// }
+
+function getUserID($userName){
+	$url = 'https://api.instagram.com/v1/users/search?q='.$userName.'&client_id=' .clientID;
+	$instagramInfo = connectToInstagram($url);
+	$results = json_decode($instagramInfo, true);
+
+	//before function printImages
+	//echo $results['data'][0]['id'];
+	return $results['data'][0]['id'];
+
+}
+//print out images onto screen
+
+function printImages($userID){
+	//url of information we are requesting
+	$url = 'https://api.instagram.com/v1/users/'.$userID.'/media/recent?client_id='.clientID.'&count=5';
+	$instagramInfo = connectToInstagram($url);
+	$results = json_decode($instagramInfo, true);
+	//parsing through each picture
+	foreach ($results['data'] as $items) {
+		$image_url = $items['images']['low_resolution']['url'];
+		echo '<img src=" ' . $image_url . ' "/><br/>';
+		//savePicture($image_url);
+	}
+
+}
+
 	if (isset($_GET['code'])){
 		$code = ($_GET['code']);
 		$url = 'https://api.instagram.com/oauth/access_token';
@@ -28,7 +98,15 @@
 		curl_close($curl);
 
 		$results = json_decode($result, true);
-		echo $results['user']['username'];
+
+		$userName = $results['user']['username'];
+
+		//echo '<pre>';
+		//print_r($userName);
+
+
+		$userID = getUserID($userName);
+		printImages($userName);
 	}
 	else{
 ?>
