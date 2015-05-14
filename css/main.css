@@ -1,0 +1,76 @@
+@import "reset.css";
+@import "normalize.css";
+
+body{
+	font: normal 14px 'Open Sans', Arial, sans-serif;
+	color: #999;
+	background: #f1f1f1;
+}
+
+.background{
+	background-image: url('esdeath.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;	
+}
+
+.background2{
+	background-image: url('vocaloid.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;	
+}
+.background3{
+	background-image: url('ghoul.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;	
+}
+.background4{
+	background-image: url('airsoft.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;	
+}
+.wrap{
+	width: 400px;
+	margin: 0 auto;
+}
+
+.task-list{
+	width: 88%;
+	min-height: 300px;
+	background: #fff;
+	box-shadow: 2px 2px 0px #ddd;
+	margin-top: 40px;
+	padding: 22px 6%;
+}
+
+#red{
+	border-radius: 25px;
+}
+
+#right{
+	margin-left: 80px;
+	margin-top: 25px;
+}
+
+#logout{
+	margin-left: 80px;
+}
+
+.center{
+    width: 20%;
+    border-radius: 25px;
+    margin-top: 50px;
+    margin-left: 400px;
+    padding-left: 100px;
+    background-color: white;
+    /*margin: 0 auto;	*/
+}
+
+#top{
+	padding-top: 50px;
+}
+
+@media screen and (max-width: 959px){
+.container {
+	width:100%;
+	margin:0px auto;
+}
