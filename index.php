@@ -1,4 +1,5 @@
 <?php
+	//require(__DIR__ . "/view/navigation.php");
 	set_time_limit(0);
 	ini_set('default_socket_timeout', 300);
 	session_start();
@@ -8,6 +9,25 @@
 	define('redirectURI','http://localhost/appAPI/index.php');
 	define('ImageDirectory','pics/');
 
+echo '<head>
+			<link rel="stylesheet" type="text/css" href="css/main.css">
+			<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+			<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+		
+			<link href="http://fonts.googleapis.com/css?family=Shojumaru" rel="stylesheet" type="text/css">
+			<link href="http://fonts.googleapis.com/css?family=Oswald" rel="stylesheet" type="text/css">
+
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">			
+		</head>';
+		echo '<body class="background4">';
+			echo'<div class="container">';
+				echo '<div class="center2">';
+					echo '<a href="index.php">Logout</a>';
+					echo '<a class="left" href="pics">Saved Pictures</a>';
+				echo '</div>';
+
+			echo '</div>';
+		echo'</body>';
 
 function connectToInstagram($url){
 	$ch = curl_init();
@@ -20,6 +40,8 @@ function connectToInstagram($url){
 	$result = curl_exec($ch);
 	curl_close($ch);
 	return $result;
+
+
 }
 
 
@@ -34,7 +56,7 @@ function getUserID($userName){
 	//require_once(__DIR__ . "/../view/navigation.php");
 }
 //print out images onto screen
-
+//require_once(__DIR__ . "/view/navigation.php");
 function printImages($userID){
 	//url of information we are requesting
 	$url = 'https://api.instagram.com/v1/users/'.$userID.'/media/recent?client_id='.clientID.'&count=5';
@@ -43,17 +65,22 @@ function printImages($userID){
 	//parsing through each picture
 	foreach ($results['data'] as $items) {
 		$image_url = $items['images']['low_resolution']['url'];
-		echo '<img src=" ' . $image_url . ' "/><br/>';
+
+		echo '<div class="center3">';
+		echo '<img src=" '.$image_url.'"/><br/>';
+		echo '</div>';
 		savePicture($image_url);
 		
 	}
-	require_once(__DIR__ . "/../view/navigation.php");
+	//require_once(__DIR__ . "/../view/navigation.php");
 }
 
 	function savePicture($image_url){
-		echo $image_url . '<br>';
+		
+
+		//echo $image_url.'<br>';
 		$filename = basename($image_url);
-		echo $filename . '<br>';
+		//echo $filename . '<br>';
 
 		$destination = ImageDirectory . $filename;
 		file_put_contents($destination, file_get_contents($image_url));
@@ -110,6 +137,8 @@ function printImages($userID){
 	<div class="container">
 		<div class="center">
 			<a href="https://api.instagram.com/oauth/authorize/?client_id=<?php echo clientID; ?>&redirect_uri=<?php echo redirectURI; ?>&response_type=code">Login</a>
+			<br>
+			<a href="pics">Saved Pictures</a>
 		</div>
 	</div>
 		
